@@ -1,6 +1,3 @@
-# Environment file (contains passwords)
-.env
-
 # Pi-hole data directories
 pihole/
 

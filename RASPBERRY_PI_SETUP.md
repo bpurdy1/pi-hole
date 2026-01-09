@@ -138,7 +138,7 @@ sudo ss -tulpn | grep :53
 
 ### 4.1 Clone the Repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/pi-hole.git ~/pihole
+git clone https://github.com/bpurdy1/pi-hole.git ~/pihole
 cd ~/pihole
 ```
 
@@ -146,7 +146,7 @@ cd ~/pihole
 
 Edit the `.env` file with your preferences:
 ```bash
-nano .env
+vim .env
 ```
 
 Key settings to change:
@@ -230,7 +230,7 @@ Manually set DNS on each device to your Pi's IP.
 
 Create a systemd service:
 ```bash
-sudo nano /etc/systemd/system/pihole.service
+sudo vim /etc/systemd/system/pihole.service
 ```
 
 Add:
