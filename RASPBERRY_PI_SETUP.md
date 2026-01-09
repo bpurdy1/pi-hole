@@ -156,12 +156,12 @@ Key settings to change:
 
 ### 4.3 Start the Stack
 ```bash
-docker compose up -d
+sudo docker compose up -d
 ```
 
 ### 4.4 Verify Containers
 ```bash
-docker compose ps
+sudo docker compose ps
 ```
 
 Both `pihole` and `unbound` should show as running/healthy.
@@ -187,12 +187,12 @@ Login with the password from your `.env` file.
 ### Check Pi-hole Upstream DNS
 In the Pi-hole web interface:
 1. Go to Settings > DNS
-2. Verify upstream DNS shows `172.20.0.2#5335` (Unbound)
+2. Verify upstream DNS shows `172.20.0.2#53` (Unbound)
 
 ### Test from Command Line
 ```bash
 # Test Unbound directly
-docker exec unbound drill @127.0.0.1 -p 5335 google.com
+docker exec unbound drill @127.0.0.1 google.com
 
 # Test Pi-hole DNS
 dig @localhost google.com
@@ -304,7 +304,7 @@ sudo ufw allow 53/udp
 ### DNS Not Working
 ```bash
 # Test Unbound
-docker exec unbound drill @127.0.0.1 -p 5335 google.com
+docker exec unbound drill @127.0.0.1 google.com
 
 # Test Pi-hole
 docker exec pihole dig @127.0.0.1 google.com

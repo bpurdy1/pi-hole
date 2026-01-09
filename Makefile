@@ -65,6 +65,6 @@ gravity:
 # Test DNS
 test:
 	@echo "Testing Unbound..."
-	docker exec unbound drill @127.0.0.1 -p 5335 google.com
+	docker exec unbound drill @127.0.0.1 google.com
 	@echo "\nTesting Pi-hole..."
 	docker exec pihole dig @127.0.0.1 google.com +short

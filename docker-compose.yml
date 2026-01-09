@@ -24,7 +24,7 @@ services:
     env_file:
       - .env
     environment:
-      - PIHOLE_DNS_=${UNBOUND_IP:-172.20.0.2}#5335
+      - PIHOLE_DNS_=${UNBOUND_IP:-172.20.0.2}#53
     ports:
       - "${PRIMARY_DNS_PORT:-53}:53/tcp"
       - "${PRIMARY_DNS_PORT:-53}:53/udp"
