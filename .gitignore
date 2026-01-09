@@ -1,0 +1,12 @@
+# Environment file (contains passwords)
+.env
+
+# Pi-hole data directories
+pihole/
+
+# Unbound runtime files
+unbound/unbound.pid
+unbound/var/
+
+# OS files
+.DS_Store
