@@ -1,0 +1,46 @@
+server:
+    # Allow queries from Pi-hole network
+    access-control: 172.20.0.0/24 allow
+    access-control: 127.0.0.0/8 allow
+
+    # Harden against spoofing
+    harden-glue: yes
+    harden-dnssec-stripped: yes
+    harden-referral-path: yes
+
+    # Use 0x20-encoded random bits in the query
+    use-caps-for-id: no
+
+    # Reduce EDNS reassembly buffer size
+    edns-buffer-size: 1232
+
+    # Prefetch cached elements
+    prefetch: yes
+    prefetch-key: yes
+
+    # Minimum TTL for cache entries
+    cache-min-ttl: 3600
+    cache-max-ttl: 86400
+
+    # Privacy settings
+    hide-identity: yes
+    hide-version: yes
+
+    # Faster timeouts
+    serve-expired: yes
+    serve-expired-ttl: 86400
+
+    # Private addresses (RFC1918)
+    private-address: 192.168.0.0/16
+    private-address: 169.254.0.0/16
+    private-address: 172.16.0.0/12
+    private-address: 10.0.0.0/8
+
+    # Enable TLS for Cloudflare Gateway forwarding
+    tls-system-cert: yes
+
+forward-zone:
+    name: "."
+    forward-tls-upstream: yes
+    forward-addr: 172.64.36.1@853#ovqzevmogq.cloudflare-gateway.com
+    forward-addr: 172.64.36.2@853#ovqzevmogq.cloudflare-gateway.com
