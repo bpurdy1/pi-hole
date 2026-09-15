@@ -1,9 +1,7 @@
 # Pi-hole data directories
-pihole/
-
 # Unbound runtime files
-unbound/unbound.pid
-unbound/var/
+pihole/unbound/unbound.pid
+pihole/unbound/var/
 
 # OS files
 .DS_Store

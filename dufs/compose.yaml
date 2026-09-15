@@ -1,0 +1,12 @@
+services:
+  dufs:
+    image: sigoden/dufs:latest
+    container_name: dufs
+    ports:
+      - 8001:5000
+    volumes:
+      - /home/admin/pihole:/pihole
+      - /home/admin:/admin
+    command: -A
+    restart: unless-stopped
+networks: {}
