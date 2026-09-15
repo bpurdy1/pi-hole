@@ -2,6 +2,22 @@
 # Unbound runtime files
 pihole/unbound/unbound.pid
 pihole/unbound/var/
+*.db
+*.db-wal
+*.db-shm
+
+# Ignore logs
+*.log
 
 # OS files
 .DS_Store
+
+# Ignore sensitive credentials and certs
+pihole/etc-pihole/cli_pw
+pihole/etc-pihole/tls.*
+pihole/etc-pihole/dhcp.leases
+
+# Ignore automated backups and list caches
+pihole/etc-pihole/config_backups/
+pihole/etc-pihole/gravity_backups/
+pihole/etc-pihole/listsCache/

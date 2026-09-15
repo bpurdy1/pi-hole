@@ -67,6 +67,7 @@ services:
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_SCHEDULE=0 0 4 * * 0
       - TZ=${TZ:-America/New_York}
+      - DOCKER_API_VERSION=1.40
 networks:
   pihole-net:
     driver: bridge
