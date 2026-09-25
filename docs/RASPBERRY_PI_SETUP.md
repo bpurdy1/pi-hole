@@ -166,6 +166,22 @@ sudo docker compose ps
 
 Both `pihole` and `unbound` should show as running/healthy.
 
+### 4.5 Enable Auto-Start on Reboot
+
+The containers have `restart: unless-stopped` policy, so they'll auto-restart as long as Docker starts on boot.
+
+Verify Docker is enabled to start on boot:
+```bash
+sudo systemctl is-enabled docker
+```
+
+If it shows "disabled", enable it:
+```bash
+sudo systemctl enable docker
+```
+
+Now your Pi-hole will automatically start after any reboot or power cycle.
+
 ## Step 5: Access Pi-hole
 
 ### Find Your Pi's IP
@@ -182,7 +198,28 @@ Example: `http://192.168.1.100:8080/admin`
 
 Login with the password from your `.env` file.
 
-## Step 6: Verify Unbound is Working
+## Step 6: Setup Blocklists
+
+After first deployment, add the recommended blocklists:
+
+```bash
+cd ~/pihole
+./scripts/setup-blocklists.sh
+```
+
+Or using make:
+```bash
+make blocklists
+```
+
+This adds the following blocklists:
+- HaGeZi DynDNS Blocklist
+- HaGeZi Popup Ads Blocklist
+- HaGeZi Pro Compressed (comprehensive ad/tracking blocking)
+- HaGeZi Threat Intelligence Feeds (malware/phishing protection)
+- Steven Black's Unified Hosts
+
+## Step 7: Verify Unbound is Working
 
 ### Check Pi-hole Upstream DNS
 In the Pi-hole web interface:
@@ -311,6 +348,50 @@ docker exec pihole dig @127.0.0.1 google.com
 
 # Check Pi-hole logs
 docker compose logs pihole
+```
+
+### Verify DNS Path is Working
+
+Watch live DNS queries to confirm the full path is working:
+```bash
+# Watch Pi-hole logs in real-time
+sudo docker exec pihole pihole -t
+```
+
+You should see output like:
+```
+01:18:29: query[A] calendar.google.com from 192.168.8.106
+01:18:29: forwarded calendar.google.com to 172.20.0.2
+01:18:29: reply calendar.google.com is 142.250.73.142
+01:18:29: gravity blocked cdn.honey.io is 0.0.0.0
+```
+
+This confirms:
+- **Queries from clients** (e.g., `from 192.168.8.106`) are reaching Pi-hole
+- **Forwarding to Unbound** (`to 172.20.0.2`) is working
+- **Replies** are coming back with IP addresses
+- **Blocking** (`gravity blocked`) is working for ads/trackers
+
+### Test from Your Computer
+
+```bash
+# Check which DNS your computer is using
+scutil --dns | grep nameserver   # macOS
+cat /etc/resolv.conf             # Linux
+
+# Query Pi-hole directly
+dig @192.168.8.136 google.com +short
+
+# Test if ads are blocked (should return 0.0.0.0 or nothing)
+dig @192.168.8.136 ads.google.com +short
+```
+
+### Packet Capture (Advanced)
+
+For detailed packet analysis:
+```bash
+# Capture DNS traffic on the Pi
+sudo tcpdump -i any port 53 -n
 ```
 
 ### Password Not Working

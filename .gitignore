@@ -21,3 +21,4 @@ pihole/etc-pihole/dhcp.leases
 pihole/etc-pihole/config_backups/
 pihole/etc-pihole/gravity_backups/
 pihole/etc-pihole/listsCache/
+pihole/etc-pihole/tls_ca.crt
